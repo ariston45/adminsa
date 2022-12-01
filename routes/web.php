@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\EditorController;
+use App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,14 +20,4 @@ Route::get('/', function () {
 Route::get('login', [AuthController::class,'index'])->name('login');
 Route::get('logout', [AuthController::class,'logout'])->name('logout');
 Route::post('proses_login',[AuthController::class,'proses_login'])->name('proses_login');
-
-Route::group(['middleware' => ['auth']], function () {
-	# Admin
-	Route::group(['middleware' => ['cek_login:admin']], function () {
-		Route::get('home', [AdminController::class,'HomeFunction']);
-	});
-	# User
-	Route::group(['middleware' => ['cek_login:editor']], function () {
-		Route::get('editor', [EditorController::class,'LandPage']);
-	});
-});
+Route::get('init-user', [ProfileController::class,'IdenUser'])->name('init-user');
