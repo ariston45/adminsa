@@ -9,18 +9,8 @@ class Menu extends Model
 {
     use HasFactory;
 
-    public function parent()
-    {
-        return $this->hasOne('App\Models\Menu', 'id', 'parent_id')->orderBy('sort_order');
-    }
-
     public function children()
     {
-        return $this->hasMany('App\Models\Menu', 'parent_id', 'id')->orderBy('sort_order');
-    }
-
-    public function tree()
-    {
-        return static::with(implode('.', array_fill(0, 100, 'children')))->where('parent_id', '=', '0')->orderBy('sort_order')->get();
+        return $this->hasMany('App\Models\Menu', 'mn_parent_id', 'id_menu');
     }
 }

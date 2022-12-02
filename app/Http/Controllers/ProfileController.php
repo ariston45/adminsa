@@ -18,7 +18,7 @@ class ProfileController extends Controller
   }
   public function IdenMenu()
   {
-    $menu = Menu::get();
-    return $menu;
+    $menus = Menu::where('mn_parent_id', '=', 0)->get();
+    return $menus;
   }
 }

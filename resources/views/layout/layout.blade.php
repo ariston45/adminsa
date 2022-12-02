@@ -1,9 +1,7 @@
 @php
   use App\Http\Controllers\ProfileController;
   $user = ProfileController::IdenUser();
-  $menu = ProfileController::IdenMenu();
-  echo $menu->tree();
-  die();
+  $menus = ProfileController::IdenMenu();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -61,11 +59,6 @@
           <b>{{ $user->username }}</b>
         </a>
       </li>
-      {{-- <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
-        </a>
-      </li> --}}
       <li class="nav-item">
         <a type="button" class="nav-link" href="{{ route('logout') }}" role="button" data-toggle="tooltip" data-placement="bottom" title="Sign Out" style="color: whitesmoke;">
           <i class="fas fa-sign-out-alt"></i>
@@ -73,47 +66,30 @@
       </li>
     </ul>
   </nav>
-
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="index3.html" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
     <div class="sidebar">
-      {{-- <nav class="mt-2">
+      <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
+          @foreach ($menus as $menu)
+          <li @if (request()->is($menu->mn_slug.'*') == true ) class="nav-item menu-open" @else  class="nav-item " @endif>
+            <a @if (count($menu->children)) href="#" @else href="{{ $menu->mn_slug }}" @endif 
+              @if (request()->is($menu->mn_slug.'*') == true ) class="nav-link active" @else class="nav-link" @endif >
+              <i class="{{ $menu->mn_icon_code }} nav-icon mid-icon"></i>
+              <p>{{ $menu->mn_title }} @if (count($menu->children)) <i class="right fas fa-angle-left"></i> @endif</p>
             </a>
+            @if (count($menu->children)) 
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v3</p>
-                </a>
-              </li>
+              @include('layout.submenu', ['childs' => $menu->children])
             </ul>
+            @endif
           </li>
+          @endforeach
         </ul>
-      </nav> --}}
-
+      </nav>
     </div>
   </aside>
   @yield('content')
