@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EditorController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SettingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +19,8 @@ Route::group(['middleware' => ['auth']], function () {
 	# Admin
 	Route::group(['middleware' => ['cek_login:ADM']], function () {
 		Route::get('home', [HomeController::class,'homeFunction']);
-	});
-	# User
-	Route::group(['middleware' => ['cek_login:editor']], function () {
-		Route::get('editor', [EditorController::class,'LandPage']);
+		Route::prefix('setting')->group(function(){
+			Route::get('user', [SettingController::class,'UserDataView']);
+		});
 	});
 });
