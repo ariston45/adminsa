@@ -31,7 +31,7 @@
 							</h3>
 						</div>
 						<div class="card-body">
-							<table id="tabel_user" class="table table-bordered tabel-customs">
+							<table id="tabel_user" class="table table-bordered table-my-customs" style="width: 100%">
 								<thead>
 									<tr>
 										<th style="width: 10px">No</th>
@@ -50,59 +50,36 @@
 	</section>
 </div>
 @endsection
-@push('css')
-{{-- <link rel="stylesheet" href="{{ URL('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}"> --}}
-{{-- <link rel="stylesheet" href="{{ URL('plugins/datatables_adminlte2/media/css/dataTables.bootstrap.min.css')}}"> --}}
-{{-- <link rel="stylesheet" href="{{ URL('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}"> --}}
-{{-- <link rel="stylesheet" href="{{ URL('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}"> --}}
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap4.min.css">
-{{-- <link rel="stylesheet" href="{{ URL('plugins/datatables_adminlte2/extensions/Responsive/css/responsive.bootstrap.css')}}"> --}}
-<style>
-<style>
-.tabel-customs {
-  border-collapse: collapse;
-  font-size: 11px;
-}
-.tabel-customs > thead {
-  background-color: #0079BA;
-  color: #f2f2f2;
-}
-.tabel-customs > thead > tr > th {
-  padding: 6px 8px;
-}
-.tabel-customs > tbody > tr > td {
-  padding: 2px 8px;
-}
-.tabel-customs tr:nth-child(even){background-color: #f2f2f2;}
-</style>
 
+@push('css')
+{{-- <link rel="stylesheet" href="{{ url('plugins/datatables_new/datatables/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ url('plugins/datatables_new/responsive/css/responsive.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ url('customs/css/custom-datatables.css') }}"> --}}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.3.1/css/rowReorder.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
+<link rel="stylesheet" href="{{ url('customs/css/custom-datatables.css') }}">
 @endpush
 @push('script')
+{{-- <script src="{{ url('plugins/datatables_new/datatables/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url('plugins/datatables_new/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url('plugins/datatables_new/resposive_2_4/dataTables.responsive.min.js') }}"></script>
+<script src="{{ url('plugins/datatables_new/resposive_2_4/responsive.bootstrap4.min.js') }}"></script> --}}
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap4.min.js"></script>
-
-{{-- <script src="{{ URL('plugins/datatables_adminlte2/media/js/jquery.dataTables.min.js')}}"></script> --}}
-{{-- <script src="{{ URL('plugins/datatables_adminlte2/media/js/dataTables.bootstrap4.min.js')}}"></script> --}}
-{{-- <script src="{{ URL('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script> --}}
-{{-- <script src="{{ URL('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script> --}}
-{{-- <script src="{{ URL('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script> --}}
-{{-- <script src="{{ URL('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script> --}}
-{{-- <script src="{{ URL('plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script> --}}
-{{-- <script src="{{ URL('plugins/datatables_adminlte2/extensions/Responsive/js/dataTables.responsive.js')}}"></script> --}}
 <script>
 $(document).ready(function (){
 	var id;
 	tabel_user = $('#tabel_user').DataTable({
 		processing: true,serverSide: true,responsive: true,lengthChange: true,
 		ajax: {
-			"url": "{!! route('source-data-user') !!}",
-			"type": "POST",
-			"data": {
-				"_token": "{{ csrf_token() }}",
-				"id" : id
+			'url': '{!! route("source-data-user") !!}',
+			'type': 'POST',
+			'data': {
+				'_token': '{{ csrf_token() }}',
+				'id' : id
 			} 
 		},
 		columns: [
@@ -110,7 +87,7 @@ $(document).ready(function (){
 			{data: 'name', name: 'name', orderable: true, searchable: true },
 			{data: 'username', name: 'username', orderable: true, searchable: true },
 			{data: 'email', name: 'email', orderable: true, searchable: true },
-			{data: 'menu', name: 'menu', orderable: true, searchable: true },
+			{data: 'menu', name: 'menu', orderable: false, searchable: false },
 		]
 	}),
 	$('#save').click(function() {
