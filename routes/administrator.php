@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('home', [HomeController::class,'homeFunction']);
 		Route::prefix('setting')->group(function(){
 			Route::get('user', [SettingController::class,'UserDataView']);
+			Route::get('user/detail-user/{id}', [SettingController::class,'viewUserDataDetail']);
 		});
 	});
 });

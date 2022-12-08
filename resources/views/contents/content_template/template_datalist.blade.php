@@ -26,7 +26,7 @@
 					<div class="card card-default">
 						<div class="card-header">
 							<h3 class="card-title">
-								<i class="fas fa-table mr-8"></i>
+								<i class="far fa-list-alt mr-8"></i>
 								Data User
 							</h3>
 						</div>

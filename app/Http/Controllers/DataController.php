@@ -8,6 +8,8 @@ use DataTables;
 
 class DataController extends Controller
 {
+	# <===========================================================================================================================================================>
+	#user #data_user
   public function sourceDataUser(Request $request)
 	{
 		$colect_data = User::all();
@@ -17,12 +19,10 @@ class DataController extends Controller
 			return '';
 		})
 		->addColumn('menu', function ($colect_data) {
-			return ' <div class="btn-group">
-			<button type="button" class="btn btn-xs btn-flat bg-gradient-primary text-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</button>
+			return '<div class="btn-group">
+			<button type="button" class="btn btn-xs bg-gradient-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</button>
 			<div class="dropdown-menu dropdown-menu-right">
-				<button class="dropdown-item" type="button">Action</button>
-				<button class="dropdown-item" type="button">Another action</button>
-				<button class="dropdown-item" type="button">Something else here</button>
+				<a href="'.url('setting/user/detail-user/'.$colect_data->id).'"><button class="dropdown-item" type="button">Lihat Detail</button></a>
 			</div></div>';
 		})
 		->addColumn('name', function ($colect_data) {
