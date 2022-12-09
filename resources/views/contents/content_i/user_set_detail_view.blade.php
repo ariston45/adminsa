@@ -31,7 +31,19 @@
 							</h3>
 						</div>
 						<div class="card-body">
-							
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="text-center">
+										<img class="custom-profile-user-img img-fluid img-circle" src="{{ url('storage/image512.png') }}" alt="User profile picture">
+									</div>
+									<div style="text-align: center;">
+										<a href="#" class="btn btn-primary btn-sm"><b>Ganti Gambar</b></a>
+									</div>
+								</div>
+								<div class="col-sm-9">
+									Test
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -42,7 +54,15 @@
 @endsection
 
 @push('css')
-
+<style>
+.custom-profile-user-img{
+	border: 3px solid #adb5bd;
+  margin: 0 auto;
+  padding: 3px;
+  width: 150px;
+	margin-bottom: 20px;
+}
+</style>
 @endpush
 @push('script')
 
