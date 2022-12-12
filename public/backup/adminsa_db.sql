@@ -11,7 +11,7 @@
  Target Server Version : 100413 (10.4.13-MariaDB)
  File Encoding         : 65001
 
- Date: 02/12/2022 16:43:49
+ Date: 12/12/2022 19:07:22
 */
 
 SET NAMES utf8mb4;
@@ -35,6 +35,27 @@ CREATE TABLE `failed_jobs`  (
 
 -- ----------------------------
 -- Records of failed_jobs
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for instansis
+-- ----------------------------
+DROP TABLE IF EXISTS `instansis`;
+CREATE TABLE `instansis`  (
+  `ins_id` int NOT NULL,
+  `ins_nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ins_alamat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ins_telepon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ins_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ins_visi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ins_misi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ins_main_logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ins_favicon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`ins_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of instansis
 -- ----------------------------
 
 -- ----------------------------
@@ -68,22 +89,15 @@ CREATE TABLE `menus`  (
   `updated_at` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `created_at` datetime NULL DEFAULT current_timestamp,
   PRIMARY KEY (`id_menu`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menus
 -- ----------------------------
-INSERT INTO `menus` VALUES (1, 'ADM', 0, 'fas fa-tachometer-alt', 'Dashboard', 'home', '2022-12-02 15:14:24', '2016-07-28 07:08:51');
-INSERT INTO `menus` VALUES (2, 'ADM', 1, 'far fa-circle', 'Home', 'home', '2022-12-02 15:15:38', '2014-08-14 01:22:17');
-INSERT INTO `menus` VALUES (3, 'ADM', 0, NULL, 'Our Services', 'our-services', '2022-12-02 14:15:14', '2016-12-08 10:54:08');
-INSERT INTO `menus` VALUES (4, 'ADM', 0, NULL, 'About', 'about', '2022-12-02 14:08:50', '2019-12-21 00:38:40');
-INSERT INTO `menus` VALUES (5, 'ADM', 4, NULL, 'About Team', 'about-team', '2022-12-02 14:08:53', '2007-11-10 23:33:04');
-INSERT INTO `menus` VALUES (6, 'ADM', 4, NULL, 'About Client', 'about-clients', '2022-12-02 14:08:56', '2000-08-02 20:02:04');
-INSERT INTO `menus` VALUES (7, 'ADM', 5, NULL, 'Contact Team', 'contact-team', '2022-12-02 14:08:59', '2018-01-12 03:25:19');
-INSERT INTO `menus` VALUES (8, 'ADM', 6, NULL, 'Contact Client', 'contact-clients', '2022-12-02 14:09:01', '2002-03-06 10:15:35');
-INSERT INTO `menus` VALUES (9, 'ADM', 2, NULL, 'Contact', 'contact', '2022-12-02 14:09:04', '2022-12-01 16:02:48');
-INSERT INTO `menus` VALUES (10, 'ADM', 1, NULL, 'Portofolio', 'portofolio', '2022-12-02 14:15:34', '2022-12-01 16:02:55');
-INSERT INTO `menus` VALUES (11, 'ADM', 1, NULL, 'Gallery', 'gallery', '2022-12-02 14:15:30', '2022-12-01 16:03:02');
+INSERT INTO `menus` VALUES (1, 'ADM', 0, 'fas fa-tachometer-alt', 'Home', 'home', '2022-12-05 12:56:28', '2016-07-28 07:08:51');
+INSERT INTO `menus` VALUES (2, 'ADM', 0, 'fas fa-cogs', 'Pengaturan', 'setting', '2022-12-05 13:25:57', '2014-08-14 01:22:17');
+INSERT INTO `menus` VALUES (3, 'ADM', 2, 'far fa-circle', 'User', 'setting/user', '2022-12-05 13:16:06', '2016-12-08 10:54:08');
+INSERT INTO `menus` VALUES (4, 'ADM', 2, 'far fa-circle', 'Logo', 'setting/logo', '2022-12-05 13:16:16', '2019-12-21 00:38:40');
 
 -- ----------------------------
 -- Table structure for migrations
@@ -147,15 +161,17 @@ CREATE TABLE `personal_access_tokens`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
-  `id` bigint(20) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `password` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
+  `phone` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `remember_token` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `address` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
@@ -166,6 +182,6 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (00000000000000000001, 'Agus Salim', 'agus123', 'ADM', NULL, '$2y$10$oQgqoiq/sf3ugAqvV1hFJugis285NXL1.8j6MKAwH8XSrtDh1Kzkm', 'agus@webmaster.com', NULL, '2022-12-01 15:03:18', '2022-12-01 15:04:29', '2022-12-01 16:12:41');
+INSERT INTO `users` VALUES (1, 'Agus Salim', 'agus123', 'ADM', NULL, '$2y$10$oQgqoiq/sf3ugAqvV1hFJugis285NXL1.8j6MKAwH8XSrtDh1Kzkm', 'agus@webmaster.com', '2022-12-01 15:03:18', NULL, NULL, NULL, '2022-12-01 15:04:29', '2022-12-01 16:12:41');
 
 SET FOREIGN_KEY_CHECKS = 1;

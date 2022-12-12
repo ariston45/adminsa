@@ -26,3 +26,9 @@
   padding: 3px;
   width: 100px;
 }
+.label-form-control{
+  margin-bottom: 4px;
+}
+.form-group-custom{
+  margin-bottom: 10px;
+}
