@@ -77,10 +77,10 @@
 									</p>
 									<strong>Akses Pengguna</strong>
 									<p class="text-muted">
-										@if ($init_user->email == null)
+										@if ($init_user->level == null)
 										-
 										@else
-										{{ $init_user->email }}
+										{{ $init_user->level }}
 										@endif
 									</p>
 									<strong>Phone Number</strong>
@@ -135,29 +135,49 @@
 						<div class="col-sm-9">
 							<div class="form-group form-group-custom">
 								<label class="label-form-control" for="nama_pengguna">Nama Pengguna</label>
-								<input name="usernama" class="form-control form-control-sm rounded-0" type="text"  placeholder="user_name">
+								<input name="usernama" value="{{ $init_user->username }}" class="form-control form-control-sm rounded-0" type="text"  placeholder="user_name">
 							</div>
 							<div class="form-group form-group-custom">
 								<label class="label-form-control" for="nama_lengkap">Nama Lengkap</label>
-								<input name="fullname" class="form-control form-control-sm rounded-0" type="text"  placeholder="Nama Lengkap">
+								<input name="fullname" value="{{ $init_user->name }}" class="form-control form-control-sm rounded-0" type="text"  placeholder="Nama Lengkap">
 							</div>
 							<div class="form-group form-group-custom">
 								<label class="label-form-control" for="akses_pengguna">Akses Pengguna</label>
-								<input name="accessname" class="form-control form-control-sm rounded-0" type="text"  placeholder="Nama Lengkap">
+								<select name="accesslevel" class="custom-select custom-select-i rounded-0" >
+									@switch($init_user->level)
+										@case('ADM')
+										<option value="ADM" style="font-weight: bold;">Admin</option>
+											@break
+										@case('MGR')
+										<option value="MGR" style="font-weight: bold;">Manager</option>
+											@break
+										@case('MKT')
+										<option value="MKT" style="font-weight: bold;">Marketing</option>
+											@break
+										@case('TCL')
+										<option value="TCL" style="font-weight: bold;">Technical</option>
+											@break	
+										@default
+									@endswitch
+									<option value="ADM">Admin</option>
+									<option value="MGR">Manager</option>
+									<option value="MKT">Marketing</option>
+									<option value="TCL">Technical</option>
+								</select>
 							</div>
 							<div class="form-group form-group-custom">
 								<label class="label-form-control" for="email">Email</label>
-								<input name="email" class="form-control form-control-sm rounded-0" type="email"  placeholder="xxx@example.com" autocomplete="off">
+								<input name="email" value="{{ $init_user->email }}" class="form-control form-control-sm rounded-0" type="email"  placeholder="xxx@example.com" autocomplete="off">
 							</div>
 							<div class="form-group form-group-custom">
 								<label class="label-form-control" for="email">Nomor Telepon</label>
-								<input name="phone" class="form-control form-control-sm rounded-0" type="text"  placeholder="+00 - xxx - xxxx - xxxx" autocomplete="off">
+								<input name="phone" value="{{ $init_user->phone }}" class="form-control form-control-sm rounded-0" type="text"  placeholder="+00 - xxx - xxxx - xxxx" autocomplete="off">
 							</div>
 							<div class="form-group form-group-custom">
 								<label class="label-form-control" for="email">Alamat</label>
-								<input name="address" class="form-control form-control-sm rounded-0" type="text"  placeholder="Jl. xxx No. n" autocomplete="off">
+								<input name="address" value="{{ $init_user->address }}" class="form-control form-control-sm rounded-0" type="text"  placeholder="Jl. xxx No. n" autocomplete="off">
 							</div>
-							<hr>
+							<hr style="border-top: 2px dashed rgb(229, 229, 236); margin-bottom: 8px;">
 							<div class="form-group form-group-custom">
 								<label class="label-form-control" for="email">Password</label>
 								<div class="input-group">
@@ -224,6 +244,13 @@
 .custom-btn-input-grup{
 	padding: 1px 10px;
 	border-radius: 0px;
+}
+.custom-select-i{
+	height: calc(1.8125rem + 2px);
+  padding: 0.25rem 0.5rem;
+  font-size: .875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
 }
 </style>
 @endpush
