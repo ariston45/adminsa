@@ -24,8 +24,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="card card-default">
-						<div class="card-header">
-							<h3 class="card-title">
+						<div class="card-header" >
+							<h3 class="card-title" style="padding-top: 3px;">
 								<i class="fas fa-list-alt mr-8"></i>
 								Detail Data User
 							</h3>
@@ -117,7 +117,9 @@
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
-			<form action="" autocomplete="new-password">
+			<form id="form-update-user" action="" autocomplete="new-password">
+				@csrf
+				<meta name="csrf-token" content="{{ csrf_token() }}" />
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-sm-3">
@@ -201,7 +203,7 @@
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-default btn-xs custom-btn-modal" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary btn-xs custom-btn-modal">Save changes</button>
+					<button id="action-store" type="button" class="btn btn-primary btn-xs custom-btn-modal">Save changes</button>
 				</div>
 			</form>
 		</div>
@@ -210,6 +212,7 @@
 @endsection
 
 @push('css')
+<link rel="stylesheet" href="{{ url('plugins/sweetalert2/sweetalert2.min.css') }}">
 <style>
 #customInputFile{
 	display: none;
@@ -252,9 +255,22 @@
   line-height: 1.5;
   border-radius: 0.2rem;
 }
+#swal2-title{
+	padding-top: 6px;
+}
+#swal2-html-container{
+	margin-top: 6px;
+}
+.swal2-actions{
+	margin: 10px auto 0;
+}
+.any_test{
+	margin-top: 10px;
+}
 </style>
 @endpush
 @push('script')
+<script src="{{ url('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 <script>
 $('#customInputFile').change(function() {
 	readImgUrlAndPreview(this);
@@ -283,6 +299,62 @@ $('#customInputFile').change(function() {
     }
     let input = $(this).next();
     input.attr('type', input.attr('type') === 'password' ? 'text' : 'password');
+  });
+</script>
+<script>
+	$(document).ready(function (){
+    $('#action-store').click(function() {
+      var formData = $('#form-update-user').serialize();
+      var passwd = $("#password").val();
+      var confirm_passwd = $("#confirm-password").val();
+      if (passwd === confirm_passwd) {
+        $.ajax({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+          type: 'POST',
+          url: "{{ route('store-update-user') }}",
+          data: formData,
+          cache:false,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            if (data == 1) {
+							$('#modal-perbarui-data-user').modal('hide');
+              Swal.fire({
+								icon:'success',
+								title: '<h5 style="margin-bottom:0px;">Berhasil!</h5>',
+								html: '<div style="font-size:16px;">Data user berhasil diperbarui.</div>',
+								buttonsStyling: false,
+								customClass: {
+									confirmButton: 'btn btn-primary btn-sm',
+									loader: 'custom-loader',
+									icon: 'any_test',
+								},
+							})
+            }else{
+              $('#notif-input-user').html(data).show();
+            }
+          },
+          error: function(response) {
+            $('#nameError').show();
+            $('#nameError').text(response.responseJSON.errors.fotouser);
+          }
+        })
+      }else{
+        Swal.fire({
+					icon:'warning',
+          type: 'warning',
+          title: '<h4>Oops... Password salah!</h4>',
+          html: 'Konfirmasi password yang anda inputkan tidak sesuai.<br>Inputkan kembali password dengan benar.</br>',
+					buttonsStyling: false,
+					customClass: {
+						confirmButton: 'btn btn-primary btn-sm',
+						loader: 'custom-loader'
+					},
+        })
+      }
+    });
   });
 </script>
 @endpush
