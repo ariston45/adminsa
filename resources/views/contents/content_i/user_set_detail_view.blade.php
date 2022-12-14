@@ -33,7 +33,7 @@
 								<a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-perbarui-data-user">
 									<b> <i class="fas fa-edit" style="margin-right: 3px;"></i> Perbarui</b>
 								</a>
-								<a href="#" class="btn btn-primary btn-xs">
+								<a href="#" class="btn btn-primary btn-xs" id="btn-delete-date">
 									<b> <i class="fas fa-trash-alt" style="margin-right: 3px;"></i> Hapus</b>
 								</a>
 								<a href="#" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Close">
@@ -45,7 +45,11 @@
 							<div class="row">
 								<div class="col-sm-3">
 									<div class="text-center">
+										@if ($init_user->image == null)
 										<img class="custom-profile-user-img img-fluid custom-img-circle" src="{{ url('storage/user_default.png') }}" alt="User profile picture">
+										@else
+										<img class="custom-profile-user-img img-fluid custom-img-circle" src="{{ url('storage/img_profile/'.$init_user->image) }}" alt="User profile picture">
+										@endif
 									</div>
 									<div style="text-align: center;">
 									</div>
@@ -117,27 +121,36 @@
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
-			<form id="form-update-user" action="" autocomplete="new-password">
-				@csrf
-				<meta name="csrf-token" content="{{ csrf_token() }}" />
+			<form id="form-update-user" enctype="multipart/form-data" action="javascript:void(0)" autocomplete="new-password">
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-sm-3">
 							<div class="text-center">
+								@if ($init_user->image == null)
 								<img id="defaultProfileImage" class="custom-profile-user-img-i img-fluid custom-img-circle" src="{{ url('storage/user_default.png') }}" alt="User profile picture">
 								<img id="uploadProfileImage" class="custom-profile-user-img-i img-fluid custom-img-circle" src="{{ url('storage/user_default.png') }}" alt="User profile picture" style="display: none;">
+								<img id="alreadyProfileImage" class="custom-profile-user-img-i img-fluid custom-img-circle" src="{{ url('storage/user_default.png') }}" alt="User profile picture" style="display: none;">
+								@else
+								<img id="defaultProfileImage" class="custom-profile-user-img-i img-fluid custom-img-circle" src="{{ url('storage/user_default.png') }}" alt="User profile picture" style="display: none;">
+								<img id="uploadProfileImage" class="custom-profile-user-img-i img-fluid custom-img-circle" src="{{ url('storage/user_default.png') }}" alt="User profile picture" style="display: none;">
+								<img id="alreadyProfileImage" class="custom-profile-user-img-i img-fluid custom-img-circle" src="{{ url('storage/img_profile/'.$init_user->image) }}" alt="User profile picture">
+								@endif
 							</div>
 							<div style="text-align: center;">
 								<div class="custom-file">
-									<input type="file" name="profile_photo" class="custom-file-input" id="customInputFile" >
+									<input type="file" name="profile_photo" class="custom-file-input" id="customInputFile" accept="image/png, image/jpeg">
 									<label class="btn btn-xs btn-default" for="customInputFile">Unggah Photo</label>
+									<input type="hidden" id="param-profile-img" name="param_profile_img" value="">
+									<button type="button" id="trash-profile-img" class="btn btn-xs btn-default" style="margin-bottom: 8px;"><i class="far fa-trash-alt "></i></button>
 								</div>
 							</div>
 						</div>
 						<div class="col-sm-9">
 							<div class="form-group form-group-custom">
 								<label class="label-form-control" for="nama_pengguna">Nama Pengguna</label>
-								<input name="usernama" value="{{ $init_user->username }}" class="form-control form-control-sm rounded-0" type="text"  placeholder="user_name">
+								<input type="hidden" name="_token" value="{{ csrf_token() }}">
+								<input type="hidden" name="init" value="{{ $init_user->id }}">
+								<input name="username" value="{{ $init_user->username }}" class="form-control form-control-sm rounded-0" type="text"  placeholder="user_name" required>
 							</div>
 							<div class="form-group form-group-custom">
 								<label class="label-form-control" for="nama_lengkap">Nama Lengkap</label>
@@ -181,29 +194,33 @@
 							</div>
 							<hr style="border-top: 2px dashed rgb(229, 229, 236); margin-bottom: 8px;">
 							<div class="form-group form-group-custom">
-								<label class="label-form-control" for="email">Password</label>
+								<label class="label-form-control" for="password">Password</label>
 								<div class="input-group">
-                  <div class="input-group-prepend toggle-password">
+									<div class="input-group-prepend toggle-password">
 										<button type="button" class="btn btn-default btn-sm rounded-0" id="btn-switch-view"><i class="far fa-eye-slash"></i></button>
-                  </div>
-                  <input type="password" class="form-control form-control-sm rounded-0" id="password" name="password"  placeholder="password" autocomplete="new-password">
-                </div>
+									</div>
+									<input type="password" class="form-control form-control-sm rounded-0" id="password" name="password"  placeholder="password" autocomplete="new-password">
+								</div>
 							</div>
 							<div class="form-group form-group-custom">
-								<label class="label-form-control" for="email">Konfirmasi Password</label>
+								<label class="label-form-control" for="confirm-password">Konfirmasi Password</label>
 								<div class="input-group">
-                  <div class="input-group-prepend toggle-password">
+									<div class="input-group-prepend toggle-password">
 										<button type="button" class="btn btn-default btn-sm rounded-0" id="btn-switch-view"><i class="far fa-eye-slash"></i></button>
-                  </div>
-                  <input type="password" class="form-control form-control-sm rounded-0" id="confirm-password" name="confirm_password" placeholder="konfirmasi password" autocomplete="new-password">
-                </div>
+									</div>
+									<input type="password" class="form-control form-control-sm rounded-0" id="confirm-password" name="confirm_password" placeholder="konfirmasi password" autocomplete="new-password">
+								</div>
 							</div>
 						</div>
+						<div class="col-sm-12" id="notif-failed-input"></div>
 					</div>
 				</div>
 				<div class="modal-footer justify-content-between">
-					<button type="button" class="btn btn-default btn-xs custom-btn-modal" data-dismiss="modal">Close</button>
-					<button id="action-store" type="button" class="btn btn-primary btn-xs custom-btn-modal">Save changes</button>
+					<button type="button" class="btn btn-default btn-xs custom-btn-modal" data-dismiss="modal">Tutup</button>
+					<div class="float-right">
+						<button id="action-reset" type="reset" class="btn btn-default btn-xs"><i class="far fa-trash-alt mr-8"></i>Batal</button>
+						<button id="action-store" type="submit" class="btn btn-primary btn-xs"><i class="fas fa-save mr-8"></i>Simpan</button>
+					</div>
 				</div>
 			</form>
 		</div>
@@ -219,16 +236,17 @@
 }
 .custom-profile-user-img{
 	border: 3px solid #dee3e9;
-  margin: 0 auto;
-  padding: 3px;
-  width: 150px;
+	margin: 0 auto;
+	padding: 3px;
+	width: 150px;
 	margin-bottom: 15px;
 }
 .custom-profile-user-img-i{
 	border: 3px solid #dee3e9;
-  margin: 0 auto;
-  padding: 3px;
-  width: 120px;
+	margin: 0 auto;
+	padding: 0px;
+	width: 120px;
+	height: 120px;
 	margin-bottom: 15px;
 }
 .custom-img-circle{
@@ -250,10 +268,10 @@
 }
 .custom-select-i{
 	height: calc(1.8125rem + 2px);
-  padding: 0.25rem 0.5rem;
-  font-size: .875rem;
-  line-height: 1.5;
-  border-radius: 0.2rem;
+	padding: 0.25rem 0.5rem;
+	font-size: .875rem;
+	line-height: 1.5;
+	border-radius: 0.2rem;
 }
 #swal2-title{
 	padding-top: 6px;
@@ -274,87 +292,125 @@
 <script>
 $('#customInputFile').change(function() {
 	readImgUrlAndPreview(this);
-  function readImgUrlAndPreview(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
+	function readImgUrlAndPreview(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
 				$('#defaultProfileImage').hide();
-				$('#uploadProfileImage').show();
-        $('#uploadProfileImage').attr('src', e.target.result);
-      }
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
+				$('#alreadyProfileImage').hide();
+				$('#uploadProfileImage').fadeIn('slow');
+				$('#param-profile-img').val('CHANGE');
+				$('#uploadProfileImage').attr('src', e.target.result);
+			}
+		};
+		reader.readAsDataURL(input.files[0]);
+	}
 });
 </script>
 <script>
-  $('.toggle-password').click(function(){
-    var ico = $("i", this).attr("class");
-    if (ico == "far fa-eye-slash") {
-      $("i", this).removeClass("far fa-eye-slash");
-      $("i", this).addClass("far fa-eye");
-    }else{
-      $("i", this).removeClass("far fa-eye");
-      $("i", this).addClass("far fa-eye-slash");
-    }
-    let input = $(this).next();
-    input.attr('type', input.attr('type') === 'password' ? 'text' : 'password');
-  });
+	$('.toggle-password').click(function(){
+		var ico = $("i", this).attr("class");
+		if (ico == "far fa-eye-slash") {
+			$("i", this).removeClass("far fa-eye-slash");
+			$("i", this).addClass("far fa-eye");
+		}else{
+			$("i", this).removeClass("far fa-eye");
+			$("i", this).addClass("far fa-eye-slash");
+		}
+		let input = $(this).next();
+		input.attr('type', input.attr('type') === 'password' ? 'text' : 'password');
+	});
 </script>
 <script>
 	$(document).ready(function (){
-    $('#action-store').click(function() {
-      var formData = $('#form-update-user').serialize();
-      var passwd = $("#password").val();
-      var confirm_passwd = $("#confirm-password").val();
-      if (passwd === confirm_passwd) {
-        $.ajax({
-					headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					},
-          type: 'POST',
-          url: "{{ route('store-update-user') }}",
-          data: formData,
-          cache:false,
-          contentType: false,
-          processData: false,
-          success: function(data) {
-            if (data == 1) {
+		$('#form-update-user').submit(function(e) {
+			e.preventDefault();
+			$.ajaxSetup({
+				headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+			});
+			var formData = new FormData(this);
+			var passwd = $("#password").val();
+			var confirm_passwd = $("#confirm-password").val();
+			if (passwd === confirm_passwd) {
+				$.ajax({
+					type: 'POST',
+					url: "{{ route('store-update-user') }}",
+					data: formData,
+					cache:false,
+					contentType: false,
+					processData: false,
+					success: function(data) {
+						if (data.param == 1) {
 							$('#modal-perbarui-data-user').modal('hide');
-              Swal.fire({
+							Swal.fire({
 								icon:'success',
 								title: '<h5 style="margin-bottom:0px;">Berhasil!</h5>',
 								html: '<div style="font-size:16px;">Data user berhasil diperbarui.</div>',
 								buttonsStyling: false,
 								customClass: {
-									confirmButton: 'btn btn-primary btn-sm',
+									confirmButton: 'btn btn-primary btn-sm btn-block',
 									loader: 'custom-loader',
 									icon: 'any_test',
 								},
 							})
-            }else{
-              $('#notif-input-user').html(data).show();
-            }
-          },
-          error: function(response) {
-            $('#nameError').show();
-            $('#nameError').text(response.responseJSON.errors.fotouser);
-          }
-        })
-      }else{
-        Swal.fire({
+						}else{
+							$('#notif-failed-input').html(data.message).fadeIn('slow');
+						}
+					}
+				})
+			}else{
+				Swal.fire({
 					icon:'warning',
-          type: 'warning',
-          title: '<h4>Oops... Password salah!</h4>',
-          html: 'Konfirmasi password yang anda inputkan tidak sesuai.<br>Inputkan kembali password dengan benar.</br>',
+					type: 'warning',
+					title: '<h5>Oops... Password salah!</h5>',
+					html: '<div style="font-size:16px;">Konfirmasi password yang anda inputkan tidak sesuai.<br>Inputkan kembali password dengan benar.</br></div>',
 					buttonsStyling: false,
 					customClass: {
 						confirmButton: 'btn btn-primary btn-sm',
 						loader: 'custom-loader'
 					},
-        })
-      }
-    });
-  });
+				})
+			}
+		});
+	});
+	$(document).ready(function (){
+		$('#btn-delete-date').click(function(){
+			Swal.fire({
+				icon:'warning',
+				type: 'warning',
+				title: '<h5>Oops... Password salah!</h5>',
+				html: '<div style="font-size:16px;">Konfirmasi password yang anda inputkan tidak sesuai.<br>Inputkan kembali password dengan benar.</br></div>',
+				buttonsStyling: false,
+				customClass: {
+					confirmButton: 'btn btn-primary btn-sm',
+					loader: 'custom-loader'
+				},
+			})			
+		});
+	});
+	$(document).ready(function (){
+		@if ($init_user->image == null)
+			$('#action-reset').click(function () {
+				$('#uploadProfileImage').hide();
+				$('#defaultProfileImage').fadeIn('slow');
+				$('#notif-failed-input').fadeOut('slow');
+			});
+		@else
+		$('#action-reset').click(function () {
+				$('#uploadProfileImage').hide();
+				$('#defaultProfileImage').hide();
+				$('#notif-failed-input').fadeOut('slow');
+				$('#alreadyProfileImage').fadeIn('slow');
+			});	
+		@endif
+		$('#trash-profile-img').click(function(){
+			$('#param-profile-img').val('REMOVE');
+			$('#uploadProfileImage').hide();
+			$('#alreadyProfileImage').hide();
+			$('#defaultProfileImage').fadeIn('slow');
+			$('#customInputFile').val(null);
+			$('#notif-failed-input').fadeOut('slow');
+		});
+	});
 </script>
 @endpush

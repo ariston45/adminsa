@@ -49,9 +49,9 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         @if ($user->image == null)
-        <img id="img-user-profile" src="{{ url('storage/image512.png') }}" alt="User Image" >
+        <img id="img-user-profile" src="{{ url('storage/user_default.png') }}" alt="User Image" >
         @else
-        <img id="img-user-profile" src="{{ url('storage/'.$user->image) }}" alt="User Image" >
+        <img id="img-user-profile" src="{{ url('storage/img_profile/'.$user->image) }}" alt="User Image" >
         @endif
       </li>
       <li class="nav-item">
