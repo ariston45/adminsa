@@ -14,8 +14,11 @@
 .mr-8{
   margin-right: 8px;
 }
-.mr-5{
+.cst-mr-5{
   margin-right: 5px;
+}
+.cst-mt-4{
+  margin-top: 4px;
 }
 /* .mid-icon{
   vertical-align: middle;

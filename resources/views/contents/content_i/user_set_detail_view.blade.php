@@ -33,10 +33,10 @@
 								<a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-perbarui-data-user">
 									<b> <i class="fas fa-edit" style="margin-right: 3px;"></i> Perbarui</b>
 								</a>
-								<a href="#" class="btn btn-primary btn-xs" id="btn-delete-date">
+								<a href="#" class="btn btn-primary btn-xs" id="btn-delete-data">
 									<b> <i class="fas fa-trash-alt" style="margin-right: 3px;"></i> Hapus</b>
 								</a>
-								<a href="#" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Close">
+								<a href="{{ url('setting/user') }}" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Close">
 									<i class="fas fa-times-circle"></i>
 								</a>
 							</div>
@@ -229,7 +229,7 @@
 @endsection
 
 @push('css')
-<link rel="stylesheet" href="{{ url('plugins/sweetalert2/sweetalert2.min.css') }}">
+<link rel="stylesheet" href="{{ url('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 <style>
 #customInputFile{
 	display: none;
@@ -284,6 +284,14 @@
 }
 .any_test{
 	margin-top: 10px;
+}
+.btn-custom{
+	width: 60px;
+	margin-right: 4px;
+	margin-left: 4px;
+}
+.swal2-actions {
+	margin: 1em auto 0;
 }
 </style>
 @endpush
@@ -374,17 +382,54 @@ $('#customInputFile').change(function() {
 		});
 	});
 	$(document).ready(function (){
-		$('#btn-delete-date').click(function(){
+		var init = {{ $init_user->id }};
+		$('#btn-delete-data').click(function(){
 			Swal.fire({
-				icon:'warning',
-				type: 'warning',
-				title: '<h5>Oops... Password salah!</h5>',
-				html: '<div style="font-size:16px;">Konfirmasi password yang anda inputkan tidak sesuai.<br>Inputkan kembali password dengan benar.</br></div>',
+				title: '<h5><b>Hapus User !</b></h5>',
+				html: '<div style="font-size:16px;">Data yang terhapus tidak dapat dikembalikan, apakah anda yakin ?</div>',
+				icon: 'warning',
+				confirmButtonText: 'Iya',
+				denyButtonText: 'Tidak',
+				cancelButtonText: 'Batal',
+				showDenyButton: false,
+				showCancelButton: true,
 				buttonsStyling: false,
 				customClass: {
-					confirmButton: 'btn btn-primary btn-sm',
-					loader: 'custom-loader'
-				},
+					confirmButton: 'btn bg-gradient-primary btn-sm btn-custom',
+					cancelButton: 'btn bg-gradient-secondary btn-sm btn-custom',
+					denyButton: 'btn bg-gradient-secondary btn-sm btn-custom',
+					actions: 'group-actions',
+				}
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						type: "POST",
+						headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            url: "{{ route('delete-user') }}",
+            data: {
+							"init": init
+            },
+						success: function(data) {
+							if (data == 1) {
+								Swal.fire({
+									title: '<h5>Berhasil !</h5>',
+									html: '<div style="font-size:16px;">Data berhasil dihapus.</div>',
+									icon:'success',
+									confirmButtonText: 'Oke',
+									buttonsStyling: false,
+									customClass: {
+										confirmButton: 'btn btn-primary btn-sm btn-custom',
+										loader: 'custom-loader'
+									}
+								}).then((result) => {
+									if (result.isConfirmed) {
+										window.location.href = "{{ url('setting/user') }}";
+									}
+								});
+							}
+            }
+          })
+				}
 			})			
 		});
 	});

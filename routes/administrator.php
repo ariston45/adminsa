@@ -22,9 +22,12 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::prefix('setting')->group(function(){
 			Route::get('user', [SettingController::class,'UserDataView']);
 			Route::get('user/detail-user/{id}', [SettingController::class,'viewUserDataDetail']);
+			Route::get('instansi', [SettingController::class,'InstansiDataView']);
 		});
 		Route::prefix('crud')->group(function(){
-			Route::post('store-update-user', [ActionController::class,'storeUdateUser'])->name('store-update-user');
+			Route::post('store-user', [ActionController::class,'storeUser'])->name('store-user');
+			Route::post('store-update-user', [ActionController::class,'storeUpdateUser'])->name('store-update-user');
+			Route::post('delete-user', [ActionController::class,'deleteUser'])->name('delete-user');
 		});
 	});
 });

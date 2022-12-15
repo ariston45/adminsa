@@ -22,7 +22,7 @@ class DataController extends Controller
 			return '<div class="btn-group">
 			<button type="button" class="btn btn-xs bg-gradient-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</button>
 			<div class="dropdown-menu dropdown-menu-right">
-				<a href="'.url('setting/user/detail-user/'.$colect_data->id).'"><button class="dropdown-item" type="button">Lihat Detail</button></a>
+				<a href="'.url('setting/user/detail-user/'.$colect_data->id).'"><button class="dropdown-item btn-sm" type="button"><i class="fas fa-eye cst-mr-5"></i>Lihat Detail</button></a>
 			</div></div>';
 		})
 		->addColumn('name', function ($colect_data) {
