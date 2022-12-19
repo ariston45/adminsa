@@ -103,15 +103,16 @@
   </footer>
 </div>
 {{-- <script src="{{ url('plugins/jquery/jquery.min.js') }}"></script> --}}
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="{{ url('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+<script src="{{ url('plugins/jquery/jquery-3.6.0.min.js') }}"></script>
+{{-- <script src="{{ url('plugins/jquery/jquery-3.6.0.slim.min.js') }}"></script> --}}
+{{-- <script src="{{ url('plugins/jquery-ui/jquery-ui.min.js') }}"></script> --}}
 <script src="{{ url('plugins/bootstrap4/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ url('plugins/moment/moment.min.js') }}"></script>
 <script src="{{ url('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <script src="{{ url('dist/js/adminlte.js') }}"></script>
-<script>
+{{-- <script>
   $.widget.bridge('uibutton', $.ui.button)
-</script>
+</script> --}}
 @stack('script')
 </body>
 </html>

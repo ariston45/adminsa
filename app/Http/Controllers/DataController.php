@@ -35,6 +35,6 @@ class DataController extends Controller
 			return $colect_data->email;
 		})
 		->rawColumns(['name', 'username', 'email','menu'])
-		->make(true);
+		->make('true');
 	}
 }

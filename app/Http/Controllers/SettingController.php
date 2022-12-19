@@ -16,8 +16,7 @@ class SettingController extends Controller
 	}
 	public function viewUserDataDetail(Request $request)
 	{
-		$auth = Auth::user();
-		$init_user = User::where('id',$auth->id)->first();
+		$init_user = User::where('id',$request->id)->first();
 		return view('contents.content_i.user_set_detail_view',compact('init_user'));
 	}
 	public function InstansiDataView(Request $request)

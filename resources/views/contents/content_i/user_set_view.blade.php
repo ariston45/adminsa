@@ -1,5 +1,9 @@
 @extends('layout.layout')
 @section('title')
+{{-- @php
+	echo URL::asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css');
+	die();
+@endphp --}}
 <title>Syahira CRM | Pengaturan User</title>
 @endsection
 @section('content')
@@ -208,16 +212,16 @@ $(document).ready(function (){
 	var id;
 	tabel_user = $('#tabel_user').DataTable({
 		processing: true,serverSide: true,responsive: true,lengthChange: true,
+		aaSorting: [[1, 'asc']],
 		ajax: {
 			'url': '{!! route("source-data-user") !!}',
 			'type': 'POST',
 			'data': {
 				'_token': '{{ csrf_token() }}',
 				'id' : id
-			} 
-		},
+		}},
 		columns: [
-			{data: 'DT_RowIndex', name: 'DT_RowIndex'},
+			{data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
 			{data: 'name', name: 'name', orderable: true, searchable: true },
 			{data: 'username', name: 'username', orderable: true, searchable: true },
 			{data: 'email', name: 'email', orderable: true, searchable: true },

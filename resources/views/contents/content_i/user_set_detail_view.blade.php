@@ -43,6 +43,7 @@
 						</div>
 						<div class="card-body">
 							<div class="row">
+								<div class="col-sm-12" id="notif-failed-delete"></div>
 								<div class="col-sm-3">
 									<div class="text-center">
 										@if ($init_user->image == null)
@@ -395,7 +396,7 @@ $('#customInputFile').change(function() {
 				showCancelButton: true,
 				buttonsStyling: false,
 				customClass: {
-					confirmButton: 'btn bg-gradient-primary btn-sm btn-custom',
+					confirmButton: 'btn bg-gradient-danger btn-sm btn-custom',
 					cancelButton: 'btn bg-gradient-secondary btn-sm btn-custom',
 					denyButton: 'btn bg-gradient-secondary btn-sm btn-custom',
 					actions: 'group-actions',
@@ -410,22 +411,10 @@ $('#customInputFile').change(function() {
 							"init": init
             },
 						success: function(data) {
-							if (data == 1) {
-								Swal.fire({
-									title: '<h5>Berhasil !</h5>',
-									html: '<div style="font-size:16px;">Data berhasil dihapus.</div>',
-									icon:'success',
-									confirmButtonText: 'Oke',
-									buttonsStyling: false,
-									customClass: {
-										confirmButton: 'btn btn-primary btn-sm btn-custom',
-										loader: 'custom-loader'
-									}
-								}).then((result) => {
-									if (result.isConfirmed) {
-										window.location.href = "{{ url('setting/user') }}";
-									}
-								});
+							if (data.param == 1) {
+								window.location.href = "{{ url('setting/user') }}";
+							}else{
+								$('#notif-failed-delete').html(data.message).fadeIn('slow');
 							}
             }
           })
