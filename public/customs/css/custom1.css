@@ -35,3 +35,17 @@
 .form-group-custom{
   margin-bottom: 10px;
 }
+.tree-submenu{
+  padding-left: 32px;
+}
+.nav-sidebar>.nav-item .nav-icon {
+  margin-left: 0.05rem;
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+  text-align: center;
+  width: 1.4rem;
+  padding-bottom: 2px;
+}
+.nav-sidebar .nav-treeview>.nav-item>.nav-link>.nav-icon {
+  width: 1.1rem;
+}

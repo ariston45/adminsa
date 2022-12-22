@@ -35,8 +35,8 @@ div.dataTables_wrapper div.dataTables_info{
 	font-size: 14px;
 	padding-top: 3px !important;
 }
-.dataTables_filter label{
-	margin-bottom: 0px;
+label {
+	margin-bottom: 0.125rem;
 }
 .dataTables_filter label .form-control-sm{
 	border-radius: 0.1em;

@@ -209,10 +209,6 @@ $(document).ready(function (){
 	var id;
 	tabel_user = $('#tabel_user').DataTable({
 		processing: true,serverSide: true,responsive: true,lengthChange: true,
-		"columnDefs": [ {
-"targets": 0,
-"orderable": false
-} ],
 		ajax: {
 			'url': '{!! route("source-data-user") !!}',
 			'type': 'POST',
@@ -222,7 +218,7 @@ $(document).ready(function (){
 			} 
 		},
 		columns: [
-			{data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false},
+			{data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable:false},
 			{data: 'name', name: 'name', orderable: true, searchable: true },
 			{data: 'username', name: 'username', orderable: false, searchable: true },
 			{data: 'email', name: 'email', orderable: true, searchable: true },
