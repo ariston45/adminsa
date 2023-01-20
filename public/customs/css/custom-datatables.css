@@ -44,3 +44,12 @@ label {
 .dataTables_length label .custom-select{
 	border-radius: 0.1em !important;
 }
+.content-header{
+	padding: 8px 0.5rem;
+}
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active,
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:focus,
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:hover {
+	background-color: #484e53 ;
+	color: #ffbf35;
+}
