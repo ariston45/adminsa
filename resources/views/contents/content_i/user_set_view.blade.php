@@ -75,9 +75,9 @@
 							<div style="text-align: center;">
 								<div class="custom-file">
 									<input type="file" name="profile_photo" class="custom-file-input" id="customInputFile" accept="image/png, image/jpeg">
-									<label class="btn btn-xs btn-default" for="customInputFile">Unggah Photo</label>
+									<button class="btn btn-xs btn-default" for="customInputFile">Unggah Photo</button>
 									<input type="hidden" id="param-profile-img" name="param_profile_img" value="">
-									<button type="button" id="trash-profile-img" class="btn btn-xs btn-default" style="margin-bottom: 8px;"><i class="far fa-trash-alt "></i></button>
+									<button type="button" id="trash-profile-img" class="btn btn-xs btn-default"><i class="far fa-trash-alt "></i></button>
 								</div>
 							</div>
 						</div>
@@ -135,10 +135,10 @@
 					</div>
 				</div>
 				<div class="modal-footer justify-content-between">
-					<button type="button" class="btn btn-default btn-xs custom-btn-modal" data-dismiss="modal">Tutup</button>
+					<button type="button" class="btn btn-default btn-sm custom-btn-modal" data-dismiss="modal">Tutup</button>
 					<div class="float-right">
-						<button id="action-reset" type="reset" class="btn btn-default btn-xs"><i class="far fa-trash-alt mr-8"></i>Batal</button>
-						<button id="action-store" type="submit" class="btn btn-primary btn-xs"><i class="fas fa-save mr-8"></i>Simpan</button>
+						<button id="action-reset" type="reset" class="btn btn-default btn-sm"><i class="far fa-trash-alt mr-8"></i>Batal</button>
+						<button id="action-store" type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save mr-8"></i>Simpan</button>
 					</div>
 				</div>
 			</form>
@@ -184,6 +184,10 @@
 	.modal-body{
 		padding: 12px;
 		font-size: 14px;
+	}
+	.modal-footer{
+		padding-bottom: 8px;
+		padding-top: 8px;
 	}
 	.custom-btn-modal{
 		margin: 0px;
