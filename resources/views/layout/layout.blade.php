@@ -5,7 +5,6 @@
 @endphp
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,7 +70,7 @@
 				</li>
 			</ul>
 		</nav>
-		<aside class="main-sidebar sidebar-dark-navy elevation-4 nav-compact nav-child-indent">
+		<aside class="main-sidebar sidebar-dark-warning elevation-4 nav-compact nav-child-indent">
 			<a href="index3.html" class="brand-link">
 				<img src="{{ url('storage/syahira_soft.png') }}" alt="Company Logo"
 					class="brand-image img-circle elevation-3" style="opacity: .8">
